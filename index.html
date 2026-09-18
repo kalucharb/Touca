@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Touca — Tap To Connect</title>
+<link rel="icon" type="image/svg+xml" href="assets/brand/icon.svg" />
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+  <main class="card" id="card">
+
+    <!-- Cover + avatar -->
+    <section class="cover" id="cover">
+      <div class="lang-toggle" id="langToggle"></div>
+      <button class="round-btn round-btn--left" id="shareBtn" type="button" aria-label="Share card"></button>
+      <button class="round-btn round-btn--right" id="qrBtn" type="button" aria-label="Show QR code"></button>
+      <div class="avatar-wrap">
+        <div class="avatar" id="avatar"></div>
+      </div>
+    </section>
+
+    <!-- Name + title -->
+    <section class="identity">
+      <h1 id="name"></h1>
+      <p id="title"></p>
+    </section>
+
+    <!-- Highlight / experience box -->
+    <section class="highlight" id="highlight"></section>
+
+    <!-- Contact + social links grid -->
+    <section class="links-grid" id="linksGrid"></section>
+
+    <!-- Website button -->
+    <section class="website-wrap" id="websiteWrap"></section>
+
+    <!-- About -->
+    <section class="about" id="about"></section>
+
+    <!-- Free-form extra sections (add/remove from config.js -> sections[]) -->
+    <section class="extra-sections" id="extraSections"></section>
+
+    <!-- Powered-by-Touca footer -->
+    <section class="brand-footer" id="brandFooter"></section>
+
+    <!-- Spacer so content isn't hidden behind the sticky CTA -->
+    <div class="cta-spacer"></div>
+  </main>
+
+  <!-- Sticky bottom call-to-action button -->
+  <div class="cta-bar">
+    <button class="cta-btn" id="ctaBtn" type="button"></button>
+  </div>
+
+  <!-- QR code modal -->
+  <div class="qr-modal" id="qrModal" hidden>
+    <div class="qr-modal__panel">
+      <button class="qr-modal__close" id="qrClose" type="button" aria-label="Close">&times;</button>
+      <img id="qrImage" alt="QR code" />
+      <p id="qrCaption"></p>
+    </div>
+  </div>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/script.js"></script>
+</body>
+</html>
