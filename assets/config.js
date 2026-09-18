@@ -51,29 +51,29 @@ window.CARD_CONFIG = {
 
   // ---- Photo + name + job title -------------------------------
   profile: {
-    name: "Client Name",
-    title: { en: "Job Title, Company", fr: "Poste, Entreprise" },
+    name: "Batch Kalunga",
+    title: { en: "Founder & Creative Director", fr: "Baru Agencia" },
 
     // Leave either path empty ("") to fall back to a clean
     // placeholder (initials avatar / plain gradient cover) instead
     // of a broken image. Drop client photos into assets/images/.
-    coverImage:  "assets/images/cover.jpg",
-    avatarImage: "assets/images/avatar.jpg",
+    coverImage:  "assets/images/Cover-B.jpg",
+    avatarImage: "assets/images/Batch_Pic.jpg",
   },
 
   // ---- Small callout box under the name (icon + label + text) --
   highlight: {
     icon: "💼",
     label: { en: "Experience", fr: "Expérience" },
-    text: "A short one- or two-line tagline about the client or their business goes here.",
+    text: "I’m a Founder and multimedia designer, brand strategist, motion designer, and web designer with over 13 years of experience creating impactful brand identities, digital experiences, and visual communication solutions.",
   },
 
   // ---- Used by the Save Contact button (also embedded in the vCard) ----
   contact: {
-    phone: "+27 00 000 0000",
-    email: "client@example.com",
-    company: "Client Company",              // optional, appears as ORG in the saved contact
-    whatsapp: "https://wa.me/270000000000", // digits only, no +/spaces after wa.me/
+    phone: "+27 61 450 9112",
+    email: "batch@gmail.com",
+    company: "Baru Agencia",              // optional, appears as ORG in the saved contact
+    whatsapp: "https://wa.me/27614509112", // digits only, no +/spaces after wa.me/
   },
 
   // ---- Round icon buttons grid -----------------------------------
@@ -87,20 +87,20 @@ window.CARD_CONFIG = {
   // contact rather than just downloading a file.
   links: [
     { icon: "connect",   label: { en: "Connect", fr: "Connecter" }, type: "vcard" },
-    { icon: "mail",      label: { en: "Email", fr: "E-mail" },      url: "mailto:client@example.com" },
-    { icon: "phone",     label: { en: "Call", fr: "Appeler" },      url: "tel:+270000000000" },
+    { icon: "mail",      label: { en: "Email", fr: "E-mail" },      url: "mailto:batchbam@gmail.com" },
+    { icon: "phone",     label: { en: "Call", fr: "Appeler" },      url: "tel:+27614509112" },
     { icon: "google",    label: "Google",    url: "https://google.com" },
-    { icon: "facebook",  label: "Facebook",  url: "https://facebook.com/yourpage" },
-    { icon: "instagram", label: "Instagram", url: "https://instagram.com/yourpage" },
-    { icon: "linkedin",  label: "LinkedIn",  url: "https://linkedin.com/in/yourprofile" },
-    { icon: "whatsapp",  label: "WhatsApp",  url: "https://wa.me/270000000000" },
+    { icon: "facebook",  label: "Facebook",  url: "https://www.facebook.com/batchdelarenta/" },
+    { icon: "instagram", label: "Instagram", url: "https://www.instagram.com/batch_balim/" },
+    { icon: "linkedin",  label: "LinkedIn",  url: "https://www.linkedin.com/in/batch-kalunga-9b2802181/" },
+    { icon: "whatsapp",  label: "WhatsApp",  url: "https://wa.me/27614509112" },
   ],
 
   // ---- Optional single "View website" button ----------------------
   website: {
     show: true,
-    label: { en: "View website", fr: "Voir le site" },
-    url: "https://example.com",
+    label: { en: "My Portfolio", fr: "Mon Portfolio" },
+    url: "https://tinyurl.com/BatchPortfolio",
   },
 
   // ---- About section ------------------------------------------------
@@ -108,8 +108,8 @@ window.CARD_CONFIG = {
     show: true,
     heading: { en: "About", fr: "À propos" },
     paragraphs: [
-      { en: "First paragraph — who the client is, what they do.", fr: "Premier paragraphe — qui est le client, ce qu'il fait." },
-      { en: "Second paragraph — achievements, awards, extra detail.", fr: "Deuxième paragraphe — réalisations, distinctions, détails supplémentaires." },
+      { en: "I help businesses build strong, memorable brands through graphic design, brand strategy, multimedia content, web design, and digital experiences.", fr: "J'aide les entreprises à créer des marques fortes et marquantes grâce au graphisme, à la stratégie de marque, aux contenus multimédias, à la conception de sites web et aux expériences numériques." },
+      { en: "Award-winning designer recognised for creativity, resilience, and impactful branding.", fr: "Designer primé, reconnu pour sa créativité, sa résilience et son travail d'image de marque percutant." },
     ],
   },
 
