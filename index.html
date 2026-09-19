@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Touca — Tap To Connect</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/icon.svg" />
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon"id="appleTouchIcon" href="assets/brand/icon-180.png" />
+<meta name="theme-color" id="themeColorMeta" content="#2cb45f" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" id="appleTitleMeta" content="Touca" />
 <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
@@ -13,6 +20,7 @@
 
     <!-- Cover + avatar -->
     <section class="cover" id="cover">
+      <button class="install-btn" id="installBtn" type="button" aria-label="Install app" hidden></button>
       <div class="lang-toggle" id="langToggle"></div>
       <button class="round-btn round-btn--left" id="shareBtn" type="button" aria-label="Share card"></button>
       <button class="round-btn round-btn--right" id="qrBtn" type="button" aria-label="Show QR code"></button>
@@ -60,6 +68,14 @@
       <button class="qr-modal__close" id="qrClose" type="button" aria-label="Close">&times;</button>
       <img id="qrImage" alt="QR code" />
       <p id="qrCaption"></p>
+    </div>
+  </div>
+
+  <!-- "Add to Home Screen" instructions (iOS has no install prompt API) -->
+  <div class="qr-modal" id="installModal" hidden>
+    <div class="qr-modal__panel">
+      <button class="qr-modal__close" id="installClose" type="button" aria-label="Close">&times;</button>
+      <p id="installInstructions" style="margin-top:6px;"></p>
     </div>
   </div>
 

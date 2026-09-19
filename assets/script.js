@@ -31,6 +31,7 @@
     share: '<svg viewBox="0 0 24 24"><path d="M18 16.1c-.8 0-1.4.3-2 .7l-6.1-3.6c.1-.3.1-.6 0-.9L16 8.7c.5.4 1.2.7 2 .7a3 3 0 1 0-3-3c0 .3 0 .6.1.9l-6.1 3.6a3 3 0 1 0 0 4.3l6.1 3.6c0 .3-.1.6-.1.9a3 3 0 1 0 3-2.6z"/></svg>',
     qrcode: '<svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2zm4 0h2v2h-2zm-4 4h2v2h-2zm4 0h2v2h-2zm-2-2h2v2h-2z"/></svg>',
     link: '<svg viewBox="0 0 24 24"><path d="M3.9 12a4 4 0 0 1 4-4h3v1.6H8a2.4 2.4 0 1 0 0 4.8h3V16H7.9a4 4 0 0 1-4-4zm6-.8h4.2v1.6H9.9v-1.6zM13 8h3a4 4 0 1 1 0 8h-3v-1.6h3a2.4 2.4 0 1 0 0-4.8h-3V8z"/></svg>',
+    install: '<svg viewBox="0 0 24 24"><path d="M7 1h10a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 2v16h10V3H7zm4 3h2v3h3v2h-3v3h-2v-3H8V8h3V6z"/></svg>',
   };
 
   const iconSvg = (key) => ICONS[key] || ICONS.link;
@@ -41,6 +42,10 @@
   const UI = {
     scanCaption: { en: "Scan to open this card", fr: "Scannez pour ouvrir cette carte" },
     close: { en: "Close", fr: "Fermer" },
+    iosInstallInstructions: {
+      en: 'To put the Touca icon on your screen: tap the Share icon in Safari’s toolbar, then "Add to Home Screen". Opening it will show this profile.',
+      fr: "Pour ajouter l'icône Touca à votre écran : appuyez sur Partager dans Safari, puis « Sur l'écran d'accueil ». Son ouverture affichera ce profil.",
+    },
   };
 
   // ============================================================
@@ -121,11 +126,13 @@
 
   document.getElementById("shareBtn").innerHTML = iconSvg("share");
   document.getElementById("qrBtn").innerHTML = iconSvg("qrcode");
+  document.getElementById("installBtn").innerHTML = iconSvg("install");
 
   // ============================================================
-  // SAVE TO PHONE CONTACTS (vCard) — works as a native "Add
-  // Contact" flow on iOS Safari and as a rich contact file with
-  // photo on Android / desktop.
+  // "ADD TO HOME SCREEN" (PWA) — makes the card installable as an
+  // app icon on the phone, separate from the Save Contact button.
+  // Generated at runtime from config.js so no build step or extra
+  // per-client file is needed.
   // ============================================================
   function isIOS() {
     return (
@@ -133,6 +140,53 @@
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
     );
   }
+
+  // The manifest itself is the static manifest.json at the project
+  // root (Android needs a real file it can fetch to install the card
+  // as an app). Only the per-client bits are set here.
+  function applyAppMeta() {
+    document.getElementById("appleTitleMeta").content = cfg.profile.name || "Touca";
+    document.getElementById("themeColorMeta").content = cfg.theme.accentColor;
+  }
+
+  applyAppMeta();
+
+  // ---- Install button (Android/Chrome gets a real prompt; iOS gets instructions) ----
+  let deferredInstallPrompt = null;
+  const installBtn = document.getElementById("installBtn");
+
+  function isStandaloneDisplay() {
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  }
+
+  function refreshInstallButton() {
+    if (isStandaloneDisplay()) {
+      installBtn.hidden = true;
+    } else if (deferredInstallPrompt || isIOS()) {
+      installBtn.hidden = false;
+    } else {
+      installBtn.hidden = true;
+    }
+  }
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    refreshInstallButton();
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    refreshInstallButton();
+  });
+
+  refreshInstallButton();
+
+  // ============================================================
+  // SAVE TO PHONE CONTACTS (vCard) — works as a native "Add
+  // Contact" flow on iOS Safari and as a rich contact file with
+  // photo on Android / desktop.
+  // ============================================================
 
   // vCard 3.0 requires long lines to be "folded" (wrapped with a
   // leading space) — matters most for the base64 PHOTO line.
@@ -217,6 +271,24 @@
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+    // Save Contact also offers the home-screen app icon, so one tap
+    // gets the contact in the address book AND the Touca icon on screen.
+    offerInstall();
+  }
+
+  async function offerInstall() {
+    if (isStandaloneDisplay()) return;
+    if (deferredInstallPrompt) {
+      const promptEvent = deferredInstallPrompt;
+      deferredInstallPrompt = null;
+      promptEvent.prompt();
+      await promptEvent.userChoice;
+      refreshInstallButton();
+    } else if (isIOS()) {
+      document.getElementById("installInstructions").textContent = t(UI.iosInstallInstructions);
+      document.getElementById("installModal").hidden = false;
+    }
   }
 
   function renderLinkItem(link) {
@@ -375,6 +447,34 @@
   qrModal.addEventListener("click", (e) => {
     if (e.target === qrModal) qrModal.hidden = true;
   });
+
+  const installModal = document.getElementById("installModal");
+  document.getElementById("installInstructions").textContent = t(UI.iosInstallInstructions);
+
+  installBtn.addEventListener("click", async () => {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      refreshInstallButton();
+    } else if (isIOS()) {
+      document.getElementById("installInstructions").textContent = t(UI.iosInstallInstructions);
+      installModal.hidden = false;
+    }
+  });
+
+  document.getElementById("installClose").addEventListener("click", () => (installModal.hidden = true));
+  installModal.addEventListener("click", (e) => {
+    if (e.target === installModal) installModal.hidden = true;
+  });
+
+  // Registered at the project root so its scope covers the whole
+  // card (required for Chrome/Android to treat it as installable).
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    });
+  }
 
   renderContent();
 })();
