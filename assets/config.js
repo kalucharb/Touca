@@ -90,9 +90,9 @@ window.CARD_CONFIG = {
     { icon: "mail",      label: { en: "Email", fr: "E-mail" },      url: "mailto:batchbam@gmail.com" },
     { icon: "phone",     label: { en: "Call", fr: "Appeler" },      url: "tel:+27614509112" },
     { icon: "google",    label: "Google",    url: "https://google.com" },
-    { icon: "facebook",  label: "Facebook",  url: "https://www.facebook.com/batchdelarenta/" },
-    { icon: "instagram", label: "Instagram", url: "https://www.instagram.com/batch_balim/" },
-    { icon: "linkedin",  label: "LinkedIn",  url: "https://www.linkedin.com/in/batch-kalunga-9b2802181/" },
+    { icon: "facebook",  label: "Facebook",  url: "https://tinyurl.com/b56yccfk" },
+    { icon: "instagram", label: "Instagram", url: "https://tinyurl.com/5ezvka58" },
+    { icon: "linkedin",  label: "LinkedIn",  url: "https://tinyurl.com/BatchKalunga" },
     { icon: "whatsapp",  label: "WhatsApp",  url: "https://wa.me/27614509112" },
   ],
 
